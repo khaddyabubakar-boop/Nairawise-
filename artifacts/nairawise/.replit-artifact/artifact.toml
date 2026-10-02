@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "NairaWise"
+description = "A mobile-friendly personal finance app for Nigerians to track income and expenses in naira, review monthly spending by category, and manage their budget with local device storage."
+version = "1.0.0"
+id = "artifacts/nairawise"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18170
+
+[services.development]
+run = "pnpm --filter @workspace/nairawise run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/nairawise", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/nairawise/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18170"
+BASE_PATH = "/"
